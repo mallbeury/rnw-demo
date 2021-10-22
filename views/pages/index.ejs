@@ -14,64 +14,21 @@
     <p>This is a sample Node application deployed to Heroku.</p>
   </div>
 </div>
+
 <div class="container">
-  <div class="dds-widget-container" data-widget="lema"></div>
-  <hr>
-   <div class="alert alert-info text-center" role="alert">
-    This is a RaiseNow demo.
-  </div>
+  <div class="rnw-widget-container"></div>
+  <script src="https://tamaro.raisenow.com/raise-477d/latest/widget.js"></script>
+  <script>
+    window.rnw.tamaro.runWidget('.rnw-widget-container', {
+      language: 'en',
+      amounts: [
+        {
+          "if": "paymentType() == onetime",
+          "then": [20,50,100,200],
+        },
+      ],
+    });
+  </script>
 </div>
 </body>
-
-<script>
-  window.rnwWidget = window.rnwWidget || {};
-  window.rnwWidget.configureWidget = [];
-
-  window.rnwWidget.configureWidget.push(function(options) {
-    options.widget.on(window.rnwWidget.constants.events.PAYMENT_COMPLETE, function(event) {
-      console.log(event.payment);
-
-      if (event.paymentStatus == 'success') {
-        console.log(event.payment.amount);
-        console.log(event.payment.currency);
-
-        console.log(event.payment.stored_anonymous_donation);
-        console.log(event.payment.stored_customer_nickname);
-        console.log(event.payment.stored_customer_additional_message);
-
-        var jsonData = {currency: event.payment.currency, amount: event.payment.amount, donor: event.payment.stored_customer_nickname};
-      }
-    });
-
-//    options.defaults['stored_TBGameID'] = GAME_ID;
-//    options.defaults['stored_TBPlayerID'] = PLAYER_ID;
-
-    options.extend({
-      custom_fields : {
-        stored_anonymous_donation : {
-          type : 'checkbox',
-          location : 'after',
-          reference : 'empty-step',
-          label : 'Make my donation anonymous',
-          value : 'true'
-        },
-        stored_customer_nickname : {
-          type : 'text',
-          location : 'after',
-          reference : 'empty-step',
-          placeholder : 'Your name'
-        },
-        stored_customer_additional_message : {
-          type : 'textarea',
-          location : 'after',
-          reference : 'empty-step',
-          placeholder : 'Your message of support',
-          initial : '',
-          rows: 8
-        }
-      }
-    });
-  });
-</script>
-
 </html>
