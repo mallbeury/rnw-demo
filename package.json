@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "ejs": "^3.1.5",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "express-with-json": "0.0.6",
+    "node-libcurl": "^2.3.3"
   },
   "devDependencies": {
     "got": "^11.3.0",
