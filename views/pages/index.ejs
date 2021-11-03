@@ -17,13 +17,35 @@
 
 <div class="container">
   <div class="rnw-widget-container"></div>
-  <script src="https://tamaro.raisenow.com/raise-477d/latest/widget.js"></script>
+  <script src="https://tamaro.raisenow.com/<%= rnwAPIKey %>/latest/widget.js"></script>
   <script>
     window.rnw.tamaro.runWidget('.rnw-widget-container', {
       paymentFormPrefill: {
-        stored_custom_data: '123456'
+        stored_custom_data: '123456',
+        stored_customer_company_name: null
       },
       language: 'en',
+      translations: {
+        en: {
+          payment_form: {
+            stored_customer_company_name: 'Company',
+          },
+        },
+        de: {
+          payment_form: {
+            stored_customer_company_name: 'Firme',
+          },
+        },
+      },
+      slots: {
+        profile_form_3: [{
+          component: "field",
+          type: "text",
+          name: "stored_customer_company_name",
+          label: "payment_form.stored_customer_company_name",
+          placeholder: ""
+        }]
+      },
       amounts: [
         {
           "if": "paymentType() == onetime",
