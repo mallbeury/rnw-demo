@@ -31,3 +31,7 @@ html {
 .container {
   width: 50%;
 }
+
+:root {
+  --tamaro-block-header-position-bg-color: #532F8C;
+}
