@@ -20,7 +20,10 @@
   <script src="https://tamaro.raisenow.com/<%= rnwAPIKey %>/latest/widget.js"></script>
   <script>
     window.rnw.tamaro.runWidget('.rnw-widget-container', {
+//      debug: true,
+//      debugSlots: true,
       paymentFormPrefill: {
+        stored_tip_amount: 0,
         stored_custom_data: '123456',
         stored_customer_company_name: null
       },
@@ -29,6 +32,11 @@
         en: {
           payment_form: {
             stored_customer_company_name: 'Company',
+            stored_tip_amount: 'Would you like to add a EUR 5 tip to cover all platform costs?',
+            tip_options: {
+              yes: "I would like to add a tip to cover all platform costs",
+              no: "I don't want to add a tip this time"
+            }
           },
         },
         de: {
@@ -38,6 +46,16 @@
         },
       },
       slots: {
+        payment_types_start: [{
+          component: "field",
+          type: "select",
+          name: "stored_tip_amount",
+          label: "payment_form.stored_tip_amount",
+          options: [
+            {value: '5', label: 'payment_form.tip_options.yes'},
+            {value: '0', label: 'payment_form.tip_options.no'}
+          ],
+        }],
         profile_form_3: [{
           component: "field",
           type: "text",
