@@ -38,6 +38,51 @@
               no: "I don't want to add a tip this time"
             }
           },
+
+          amount_descriptions: [
+            {
+              "if": "paymentType() == onetime",
+              "then": [
+                {
+                  "if": "amount() == 20",
+                  "then": "Something small"
+                },
+                {
+                  "if": "amount() == 50",
+                  "then": "Something medium"
+                },
+                {
+                  "if": "amount() == 100",
+                  "then": "Something large"
+                },
+                {
+                  "if": "amount() == custom_amount",
+                  "then": "You choose"
+                }
+              ]
+            },
+            {
+              "if": "paymentType() == recurring",
+              "then": [
+                {
+                  "if": "amount() == 10",
+                  "then": "Something small every time"
+                },
+                {
+                  "if": "amount() == 20",
+                  "then": "Something medium every time"
+                },
+                {
+                  "if": "amount() == 50",
+                  "then": "Something large every time"
+                },
+                {
+                  "if": "amount() == custom_amount",
+                  "then": "You choose"
+                }
+              ]
+            },
+          ]
         },
         de: {
           payment_form: {
@@ -67,8 +112,12 @@
       amounts: [
         {
           "if": "paymentType() == onetime",
-          "then": [20,50,100,200],
+          "then": [20,50,100],
         },
+        {
+          "if": "paymentType() == recurring",
+          "then": [10,20,50],
+        }
       ],
     });
   </script>
