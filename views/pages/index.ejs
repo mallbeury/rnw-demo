@@ -23,11 +23,23 @@
 //      debug: true,
 //      debugSlots: true,
       paymentFormPrefill: {
-        stored_tip_amount: 0,
-        stored_custom_data: '123456',
+        stored_tip_amount: 500,
         stored_customer_company_name: null
       },
       language: 'en',
+
+      paymentWidgetBlocks: [
+        //'payment_purposes',
+        //'payment_amounts_and_intervals',
+        'payment_payment_methods',
+        'payment_profile',
+        {
+          if: 'showPaymentAddress()',
+          then: 'payment_address',
+        },
+      ],
+      amounts: [0],
+
       translations: {
         en: {
           payment_form: {
@@ -38,7 +50,6 @@
               no: "I don't want to add a tip this time"
             }
           },
-
           amount_descriptions: [
             {
               "if": "paymentType() == onetime",
@@ -120,6 +131,12 @@
         }
       ],
     });
+
+    function afterCreate(event) {
+//      event.data.api.config.paymentWidgetBlocks = [];
+      event.data.api.config.amounts = [100];
+    }
+    window.rnw.tamaro.events.afterCreate.subscribe(afterCreate);
   </script>
 </div>
 </body>
