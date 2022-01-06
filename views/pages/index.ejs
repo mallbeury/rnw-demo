@@ -40,6 +40,8 @@
       ],
       amounts: [0],
 
+      defaultPaymentMethod: "cc",
+      
       translations: {
         en: {
           payment_form: {
@@ -50,6 +52,7 @@
               no: "I don't want to add a tip this time"
             }
           },
+
           amount_descriptions: [
             {
               "if": "paymentType() == onetime",
