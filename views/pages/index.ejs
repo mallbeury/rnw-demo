@@ -20,17 +20,18 @@
   <script src="https://tamaro.raisenow.com/<%= rnwAPIKey %>/latest/widget.js"></script>
   <script>
     window.rnw.tamaro.runWidget('.rnw-widget-container', {
-//      debug: true,
+      testMode: true,
+      debug: true,
 //      debugSlots: true,
       paymentFormPrefill: {
-        stored_tip_amount: 500,
+        stored_tip_amount: 225,
         stored_customer_company_name: null
       },
       language: 'en',
 
       paymentWidgetBlocks: [
         //'payment_purposes',
-        //'payment_amounts_and_intervals',
+        'payment_amounts_and_intervals',
         'payment_payment_methods',
         'payment_profile',
         {
@@ -38,10 +39,12 @@
           then: 'payment_address',
         },
       ],
-      amounts: [0],
 
+      paymentMethods: [
+        "cc",
+      ],
       defaultPaymentMethod: "cc",
-      
+
       translations: {
         en: {
           payment_form: {
@@ -68,6 +71,10 @@
                 {
                   "if": "amount() == 100",
                   "then": "Something large"
+                },
+                {
+                  "if": "amount() == 500",
+                  "then": "Something mega"
                 },
                 {
                   "if": "amount() == custom_amount",
@@ -123,11 +130,22 @@
           placeholder: ""
         }]
       },
+      currencies: ['eur', 'usd'],
       amounts: [
         {
           "if": "paymentType() == onetime",
-          "then": [20,50,100],
+          "then": [
+            {
+              "if": "currency() == eur",
+              "then": [20,50,100],
+            },
+            {
+              "if": "currency() == usd",
+              "then": [20,50,100,500],
+            },
+          ]
         },
+
         {
           "if": "paymentType() == recurring",
           "then": [10,20,50],
@@ -136,8 +154,8 @@
     });
 
     function afterCreate(event) {
-//      event.data.api.config.paymentWidgetBlocks = [];
-      event.data.api.config.amounts = [100];
+//      event.data.api.config.paymentWidgetBlocks.remove('payment_amounts_and_intervals');
+//      event.data.api.config.amounts = [100];
     }
     window.rnw.tamaro.events.afterCreate.subscribe(afterCreate);
   </script>

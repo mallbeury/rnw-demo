@@ -20,9 +20,11 @@ express()
         var curlTest = new Curl();
 
         // filter to show successful transactions and with a stored_custom_data matching 123456
-//        var url = 'https://api.raisenow.com/epayment/api/' + process.env.RAISENOW_API_ID + '/transactions/search?&filters[0][field_name]=last_status&displayed_fields=stored_custom_data,stored_customer_firstname,stored_customer_lastname,stored_customer_nickname,stored_customer_message,stored_tip_amount,amount,currency_identifier,last_status&filters[0][type]=fulltext&filters[0][value]=final_success&filters[1][field_name]=stored_custom_data&filters[1][type]=fulltext&filters[1][value]=123456';
+//        var url = 'https://api.raisenow.com/epayment/api/' + process.env.RAISENOW_API_ID + '/transactions/search?&filters[0][field_name]=last_status&displayed_fields=stored_custom_data,stored_customer_firstname,stored_customer_lastname,stored_customer_nickname,stored_customer_message,stored_tip_amount,amount,currency_identifier,last_status&filters[0][type]=term&filters[0][field_name]=last_status&[value]=final_success&filters[1][field_name]=stored_custom_data&filters[1][type]=fulltext&filters[1][value]=123456';
         // filter to show successful transactions
-        var url = 'https://api.raisenow.com/epayment/api/' + process.env.RAISENOW_API_ID + '/transactions/search?&filters[0][field_name]=last_status&displayed_fields=stored_custom_data,stored_customer_firstname,stored_customer_lastname,stored_customer_nickname,stored_customer_message,stored_tip_amount,amount,currency_identifier,last_status&filters[0][type]=fulltext&filters[0][value]=final_success';
+//        var url = 'https://api.raisenow.com/epayment/api/' + process.env.RAISENOW_API_ID + '/transactions/search?&filters[0][field_name]=last_status&displayed_fields=epp_transaction_id,stored_custom_data,stored_customer_firstname,stored_customer_lastname,stored_customer_nickname,stored_customer_message,stored_tip_amount,amount,currency_identifier,last_status&filters[0][type]=term&filters[0][field_name]=last_status&[value]=final_success';
+        var url = 'https://api.raisenow.com/epayment/api/' + process.env.RAISENOW_API_ID + '/transactions/search?&filters[0][type]=term&filters[0][field_name]=last_status&[value]=final_success';
+//        var url = 'https://api.raisenow.com/epayment/api/transaction/status?merchant-config=' + process.env.RAISENOW_API_KEY + '&transaction-id=c1qx164gt45z011';
 
         curlTest.setOpt(Curl.option.URL, url);
         curlTest.setOpt(Curl.option.SSLVERSION, 1);
