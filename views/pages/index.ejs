@@ -25,12 +25,12 @@
 //      debugSlots: true,
       paymentFormPrefill: {
         stored_tip_amount: 225,
-        stored_customer_company_name: null
+        stored_customer_company_name: null,
+        stored_donor_update_subscription: true
       },
       language: 'en',
-
       paymentWidgetBlocks: [
-        //'payment_purposes',
+        'payment_purposes',
         'payment_amounts_and_intervals',
         'payment_payment_methods',
         'payment_profile',
@@ -39,21 +39,39 @@
           then: 'payment_address',
         },
       ],
-
+      purposes: [
+        "purpose1",
+        "purpose2"
+      ],
       paymentMethods: [
         "cc",
       ],
       defaultPaymentMethod: "cc",
+/*
 
+      paymentTypes: [
+        "onetime",
+        "recurring"
+      ],
+      recurringIntervals: [
+//        "weekly",
+//        "monthly"
+      ],
+*/
       translations: {
         en: {
+          purposes: {
+            purpose1: 'A great purpose',
+            purpose2: 'Another great purpose',
+          },
           payment_form: {
             stored_customer_company_name: 'Company',
             stored_tip_amount: 'Would you like to add a EUR 5 tip to cover all platform costs?',
             tip_options: {
               yes: "I would like to add a tip to cover all platform costs",
               no: "I don't want to add a tip this time"
-            }
+            },
+            stored_donor_update_subscription_label: 'Receive updates'
           },
 
           amount_descriptions: [
@@ -112,16 +130,16 @@
         },
       },
       slots: {
-        payment_types_start: [{
-          component: "field",
-          type: "select",
-          name: "stored_tip_amount",
-          label: "payment_form.stored_tip_amount",
-          options: [
-            {value: '500', label: 'payment_form.tip_options.yes'},
-            {value: '0', label: 'payment_form.tip_options.no'}
-          ],
-        }],
+//        payment_types_start: [{
+//          component: "field",
+//          type: "select",
+//          name: "stored_tip_amount",
+//          label: "payment_form.stored_tip_amount",
+//          options: [
+//            {value: '500', label: 'payment_form.tip_options.yes'},
+//            {value: '0', label: 'payment_form.tip_options.no'}
+//          ],
+//        }],
         profile_form_3: [{
           component: "field",
           type: "text",
@@ -130,7 +148,8 @@
           placeholder: ""
         }]
       },
-      currencies: ['eur', 'usd'],
+//      currencies: ['eur', 'usd'],
+      currencies: ['eur'],
       amounts: [
         {
           "if": "paymentType() == onetime",
@@ -151,13 +170,18 @@
           "then": [10,20,50],
         }
       ],
+    }).then(function(api){
+//      api.computedConfig.paymentWidgetBlocks.remove('payment_amounts_and_intervals');
     });
 
-    function afterCreate(event) {
-//      event.data.api.config.paymentWidgetBlocks.remove('payment_amounts_and_intervals');
-//      event.data.api.config.amounts = [100];
+    function beforePaymentValidateAndSend(event) {
+      const api = event.data.api
+      const data = api.paymentForm.data
+
+      data.payment_type = "recurring";
+      data.recurring_interval = "monthly";
     }
-    window.rnw.tamaro.events.afterCreate.subscribe(afterCreate);
+    window.rnw.tamaro.events.beforePaymentValidateAndSend.subscribe(beforePaymentValidateAndSend);
   </script>
 </div>
 </body>
